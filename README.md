@@ -1,5 +1,11 @@
 # CIDR Visualizer
 
+<p align="center">
+  <a href="https://alfredosan-eng.github.io/CIDR-Visualizer/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐%20OPEN%20INTERACTIVE%20CIDR%20VISUALIZER-222222?style=for-the-badge" alt="Open Interactive CIDR Visualizer">
+  </a>
+</p>
+
 ## Interactive IPv4 & IPv6 Prefix Explorer
 
 **CIDR Visualizer** is an educational web application focused on one of the most important ideas in IP networking:
