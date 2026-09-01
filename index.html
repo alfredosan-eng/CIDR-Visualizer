@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CIDR Visualizer — IPv4 & IPv6</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="brandMark">/</div>
+    <div><strong>CIDR VISUALIZER</strong><small>Interactive IPv4 & IPv6 Prefix Explorer</small></div>
+  </div>
+  <nav>
+    <button class="navBtn active" data-view="learn">APRENDER</button>
+    <button class="navBtn" data-view="explore">EXPLORAR PREFIJO</button>
+    <button class="navBtn" data-view="convert">CONVERTIR</button>
+    <button class="navBtn" data-view="subnet">SUBNETTING</button>
+  </nav>
+</header>
+<main>
+<section id="learnView" class="view activeView">
+  <div class="hero">
+    <h1>¿Qué significa el número después de <span>/</span>?</h1>
+    <p>El prefijo CIDR indica cuántos bits iniciales de una dirección pertenecen a la red. Esta página permite cambiar el prefijo y observar cómo se mueve la frontera entre la parte de red y la parte restante de la dirección.</p>
+  </div>
+  <div class="learnGrid">
+    <article class="card">
+      <h2>1. La idea fundamental</h2>
+      <p>En IPv4 una dirección tiene <b>32 bits</b>. En IPv6 tiene <b>128 bits</b>. Cuando escribimos <b>/24</b>, <b>/26</b> o <b>/64</b>, ese número representa la cantidad de bits iniciales que forman el prefijo de red.</p>
+      <div class="bigFormula"><b>/n = n bits de prefijo</b></div>
+      <p>Por ejemplo, <b>192.168.1.0/24</b> significa que los primeros 24 bits pertenecen al prefijo de red y quedan 8 bits fuera de ese prefijo.</p>
+    </article>
+    <article class="card">
+      <h2>2. ¿Qué cambia al mover el /?</h2>
+      <div class="compareRows">
+        <div><b>/24</b><span>24 bits de red · 8 de host · 256 direcciones</span></div>
+        <div><b>/25</b><span>25 bits de red · 7 de host · 128 direcciones</span></div>
+        <div><b>/26</b><span>26 bits de red · 6 de host · 64 direcciones</span></div>
+        <div><b>/27</b><span>27 bits de red · 5 de host · 32 direcciones</span></div>
+      </div>
+      <p class="note">Cada bit que se agrega al prefijo se toma de la parte restante. En IPv4, cada aumento de un bit reduce a la mitad el tamaño del bloque.</p>
+    </article>
+  </div>
+  <div class="card">
+    <h2>3. El número después del / no es una máscara decimal</h2>
+    <p>Es una <b>longitud de prefijo</b>. La máscara decimal es otra representación de la misma frontera.</p>
+    <div class="mapping">
+      <div><b>/24</b><span>11111111.11111111.11111111.00000000</span><strong>255.255.255.0</strong></div>
+      <div><b>/26</b><span>11111111.11111111.11111111.11000000</span><strong>255.255.255.192</strong></div>
+      <div><b>/19</b><span>11111111.11111111.11100000.00000000</span><strong>255.255.224.0</strong></div>
+    </div>
+  </div>
+</section>
+
+<section id="exploreView" class="view">
+  <div class="hero">
+    <h1>Explorador de prefijos</h1>
+    <p>Selecciona IPv4 o IPv6 y mueve el prefijo. La frontera de bits se actualiza en tiempo real.</p>
+  </div>
+  <div class="toolbar">
+    <div class="seg"><button id="ipv4Btn" class="active">IPv4</button><button id="ipv6Btn">IPv6</button></div>
+    <label class="addrLabel">Dirección <input id="address" value="192.168.1.0"></label>
+    <div class="prefixCtl"><button id="minus">−</button><strong id="prefixText">/24</strong><button id="plus">+</button></div>
+  </div>
+  <div class="sliderBox">
+    <input id="prefixSlider" type="range" min="0" max="32" value="24">
+    <div class="rangeLabels"><span>/0</span><span id="sliderCenter">/24</span><span id="sliderMax">/32</span></div>
+  </div>
+  <div class="metrics" id="metrics"></div>
+  <div class="bitVisualizer card">
+    <h2>Frontera de red / restante</h2>
+    <div id="bitMap"></div>
+    <div class="legend"><span class="networkLegend"></span> Parte de prefijo <span class="hostLegend"></span> Parte restante</div>
+  </div>
+  <div class="twoCol">
+    <div class="card"><h2>Máscara / prefijo</h2><div id="maskInfo"></div></div>
+    <div class="card"><h2>¿Por qué cambia?</h2><div id="whyInfo"></div></div>
+  </div>
+</section>
+
+<section id="convertView" class="view">
+  <div class="hero">
+    <h1>Binario ↔ Decimal</h1>
+    <p>Aprende cómo se calcula cada octeto IPv4 y cómo una máscara binaria se transforma en su representación decimal.</p>
+  </div>
+  <div class="convertGrid">
+    <article class="card">
+      <h2>Decimal → binario</h2>
+      <input id="decInput" type="number" min="0" max="255" value="192">
+      <div id="decBits"></div>
+      <div id="decExplain"></div>
+    </article>
+    <article class="card">
+      <h2>Binario → decimal</h2>
+      <input id="binInput" value="11000000" maxlength="8">
+      <div id="binExplain"></div>
+      <div class="weights"><span>128</span><span>64</span><span>32</span><span>16</span><span>8</span><span>4</span><span>2</span><span>1</span></div>
+    </article>
+  </div>
+  <div class="card">
+    <h2>De prefijo a máscara decimal</h2>
+    <div class="prefixConvert"><label>Prefijo <input id="maskPrefix" type="number" min="0" max="32" value="26"></label><button id="maskCalc">Calcular</button></div>
+    <div id="maskCalcResult"></div>
+  </div>
+</section>
+
+<section id="subnetView" class="view">
+  <div class="hero">
+    <h1>Subnetting desde el prefijo</h1>
+    <p>Introduce una IPv4 y su prefijo para ver cómo CIDR se transforma en máscara, tamaño de bloque, Network, Broadcast y rango de hosts.</p>
+  </div>
+  <div class="toolbar subnetToolbar">
+    <label>IPv4 <input id="subIp" value="192.168.1.130"></label>
+    <label>Prefijo <input id="subPrefix" type="number" min="0" max="32" value="26"></label>
+    <button id="subCalc">Calcular</button>
+  </div>
+  <div id="subResults" class="metrics"></div>
+  <div class="subExplain card" id="subExplain"></div>
+</section>
+</main>
+<footer><span>CIDR VISUALIZER</span><span>IPv4 · IPv6 · CIDR · Binary · Subnetting</span></footer>
+<script src="app.js"></script>
+</body></html>
