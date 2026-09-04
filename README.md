@@ -1,4 +1,4 @@
-# CIDR Visualizer
+# CIDR Visualizer (Classless Inter-Domain Routing)
 
 <p align="center">
   <a href="https://alfredosan-eng.github.io/CIDR-Visualizer/" target="_blank">
