@@ -5,7 +5,7 @@
 </p>
 
 
-# CIDR Visualizer v2
+# CIDR Visualizer v2 "Classless Inter-Domain Routing"
 
 ## Interactive IPv4 & IPv6 Prefix Explorer
 
