@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://alfredosan-eng.github.io/CIDR-Visualizer/" target="_blank">
+  <a href=https://alfredosan-eng.github.io/cidr-visualizer/>
     <img src="https://img.shields.io/badge/🧮%20OPEN%20SUBNETTING%20TOOLS-4285F4?style=for-the-badge&labelColor=202124" alt="Open Subnetting Tools">
   </a>
 </p>
